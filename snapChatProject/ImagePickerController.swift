@@ -9,6 +9,7 @@
 import UIKit
 
 class ImagePickerController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+    var image : UIImage? = nil
     
     @IBOutlet var imageCollectionView: UICollectionView!
     override func viewDidLoad() {
@@ -21,9 +22,22 @@ class ImagePickerController: UIViewController, UICollectionViewDataSource, UICol
         super.didReceiveMemoryWarning()
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "feedList"){
+            let dest = segue.destination as! ImageFeedViewController
+            dest.img = image
+        }
+    }
+    
 
     func selectImage(_ image: UIImage) {
         //The image being selected is passed in as "image".
+        self.image = image
+        performSegue(withIdentifier: "feedList", sender: self)
+    }
+    
+    @IBAction func unwindToCollection(segue: UIStoryboardSegue){
+        
     }
     
     
